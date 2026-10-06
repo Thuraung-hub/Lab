@@ -1,0 +1,41 @@
+Learning Assistant API Deployment Summary (2026-08-23)
+
+1) Environment setup
+- Installed Node.js LTS via nvm (node v24.19.0, npm v11.17.0).
+- Installed dependencies successfully (hono, wrangler, typescript, workers types).
+- Logged into Cloudflare successfully with wrangler.
+
+2) D1 setup
+- Created D1 database: learning-assistant-db
+- database_id: 400ec246-bd05-48a9-9fa2-0d5e9671f5b6
+- Updated wrangler.jsonc with this database_id.
+
+3) Local migration + local endpoint tests
+- Local migration applied: 0001_create_sources.sql (success)
+- Local CRUD status checks:
+  POST   /api/sources           => 201
+  GET    /api/sources?course_id => 200
+  GET    /api/sources/:id       => 200
+  PATCH  /api/sources/:id       => 200
+  DELETE /api/sources/:id       => 204
+
+4) Production migration + deploy
+- Remote migration applied: 0001_create_sources.sql (success)
+- Worker deployed successfully.
+- Production URL:
+  https://learning-assistant-api.my-project-6731503091.workers.dev
+- Version ID:
+  c32ae686-f567-471b-a250-00afe3c44e1b
+
+5) Production verification status
+- Production CRUD verification completed using browser network stack against live URL.
+- Verified status sequence in production:
+  POST=201, LIST=200, GET=200, PATCH=200, DELETE=204
+- Evidence file created: production-evidence-live.txt
+
+6) Report notes starter
+- Use README "Design notes" points:
+  - Soft delete via archived_at (BR-11)
+  - Duplicate rejection 409 with UNIQUE(course_id, content_hash) active-row scope (DI-01)
+  - SQL parameter binding via .bind() for injection safety
+  - Scope narrowed to knowledge_source CRUD lifecycle for Assignment #2

@@ -1,0 +1,18 @@
+Campus Equipment Booking API local verification
+Base URL: http://localhost:8787/api
+
+GET /equipment: 200
+POST /bookings: 201
+GET /bookings: 200
+GET /bookings/:id: 200
+Invalid time POST: 400
+Unknown equipment POST: 404
+Overlapping booking POST: 409
+Boundary-touching booking POST: 201
+Overlapping booking PATCH: 409
+Valid booking PATCH: 200
+DELETE /bookings/:id: 204
+Deleted booking GET: 404
+
+TypeScript check: npx tsc --noEmit passed
+Local migration: npm run db:migrate:local passed

@@ -1,0 +1,19 @@
+{
+  "name": "learning-assistant-api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:migrate:local": "wrangler d1 migrations apply learning-assistant-db --local",
+    "db:migrate:remote": "wrangler d1 migrations apply learning-assistant-db --remote"
+  },
+  "dependencies": {
+    "hono": "^4.6.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260702.1",
+    "typescript": "^5.6.0",
+    "wrangler": "^3.90.0"
+  }
+}
