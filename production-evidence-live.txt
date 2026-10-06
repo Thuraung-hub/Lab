@@ -1,26 +1,27 @@
 Production API Verification Evidence (Live)
-Date: 2026-08-23
-Base URL: https://learning-assistant-api.my-project-6731503091.workers.dev
+Date: 2026-10-06
+Base URL: https://learning-assistant-api.my-project-6731503091.workers.dev/api
 
-Method/Path Results:
-- POST /api/sources => 201
-- GET /api/sources?course_id=c1 => 200
-- GET /api/sources/:id => 200
-- PATCH /api/sources/:id => 200
-- DELETE /api/sources/:id => 204
+Verified live results:
+- GET /equipment => 200
+- POST /bookings => 201
+- GET /bookings/:id => 200
+- PATCH /bookings/:id => 200
+- Invalid time POST => 400
+- Unknown equipment POST => 404
+- Overlapping booking POST => 409
+- Missing required field POST => 400
+- DELETE /bookings/:id => 204
+- Deleted booking GET /bookings/:id => 404
 
-Created Resource ID:
-5a8fd6ee-980a-40cb-881d-40f479508a9b
+Live CRUD test booking:
+- Created ID: 8b6d4207-0306-4896-af49-49f877163725
+- POST created the booking for eq-1 on 2026-11-01 from 09:00 to 11:00.
+- GET returned the booking with HTTP 200.
+- PATCH moved it to 13:00 to 15:00 and returned HTTP 200.
+- The booking was later deleted; a follow-up GET returned HTTP 404.
 
-Response Snapshots:
-POST body:
-{"id":"5a8fd6ee-980a-40cb-881d-40f479508a9b","course_id":"c1","title":"Week 3 Slides","kind":"text","source_url":null,"content_hash":"-4d3b4eb1","visibility":"course","status":"pending","failure_reason":null,"created_at":"2026-08-23 15:35:26","updated_at":"2026-08-23 15:35:26","archived_at":null}
-
-GET (single) before patch:
-{"id":"5a8fd6ee-980a-40cb-881d-40f479508a9b","course_id":"c1","title":"Week 3 Slides","kind":"text","source_url":null,"content_hash":"-4d3b4eb1","visibility":"course","status":"pending","failure_reason":null,"created_at":"2026-08-23 15:35:26","updated_at":"2026-08-23 15:35:26","archived_at":null}
-
-PATCH body:
-{"id":"5a8fd6ee-980a-40cb-881d-40f479508a9b","course_id":"c1","title":"Week 3 Slides","kind":"text","source_url":null,"content_hash":"-4d3b4eb1","visibility":"course","status":"indexed","failure_reason":null,"created_at":"2026-08-23 15:35:26","updated_at":"2026-08-23 15:35:27","archived_at":null}
-
-DELETE body:
-(empty, as expected for 204)
+Fresh live delete verification:
+- Temporary ID: 643adad8-8e88-4fef-a783-a591a1b8e9df
+- DELETE returned HTTP 204.
+- Follow-up GET returned HTTP 404 with {"error":"Booking not found"}.

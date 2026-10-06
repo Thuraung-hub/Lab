@@ -20,6 +20,25 @@ booking references one equipment record through `bookings.equipment_id`.
 The migration seeds `eq-1` and `eq-2`. Booking times are stored as ISO
 timestamps, and the API rejects overlapping bookings for the same equipment.
 
+Schema relationship:
+
+```text
+equipment (1) ────────< bookings (many)
+
+equipment
+- id TEXT PRIMARY KEY
+- name TEXT NOT NULL
+- location TEXT NOT NULL
+
+bookings
+- id TEXT PRIMARY KEY
+- equipment_id TEXT NOT NULL REFERENCES equipment(id)
+- borrower_name TEXT NOT NULL
+- start_at TEXT NOT NULL
+- end_at TEXT NOT NULL
+- purpose TEXT NOT NULL
+```
+
 ## Endpoints
 
 | Method | Path | Success |
