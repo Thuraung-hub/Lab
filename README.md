@@ -13,6 +13,13 @@ npm run dev
 
 The local base URL is `http://localhost:8787/api`.
 
+## Database
+
+The D1 database contains an `equipment` table and a `bookings` table. Each
+booking references one equipment record through `bookings.equipment_id`.
+The migration seeds `eq-1` and `eq-2`. Booking times are stored as ISO
+timestamps, and the API rejects overlapping bookings for the same equipment.
+
 ## Endpoints
 
 | Method | Path | Success |
@@ -38,6 +45,8 @@ The local base URL is `http://localhost:8787/api`.
 ## Example requests
 
 ```bash
+BASE_URL=http://localhost:8787/api
+
 curl "$BASE_URL/equipment"
 
 curl -X POST "$BASE_URL/bookings" \
